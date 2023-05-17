@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Noeud {
     private String nom;
-    private ArrayList<Arc> adj;
+    private List<Arc> adj;
     public Noeud(String name){
         nom = name;
         adj= new ArrayList<Arc>();
@@ -21,7 +21,7 @@ public class Noeud {
         return nom;
     }
 
-    public ArrayList<Arc> getAdj() {
+    public List<Arc> getAdj() {
         return adj;
     }
 }
