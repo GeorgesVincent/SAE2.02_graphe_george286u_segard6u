@@ -1,14 +1,11 @@
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class Noeud {
     private String nom;
-    private List<ARC> adj;
+    private ArrayList<Arc> adj;
     public Noeud(String name){
         nom = name;
-        adj= new List<ARC>();
+        adj= new ArrayList<Arc>();
     }
 
     @Override
@@ -17,14 +14,14 @@ public class Noeud {
     }
 
     public void ajouterArc(String destination, double cout){
-        adj.add(new ARC(new Noeud(destination),cout));
+        adj.add(new Arc(new Noeud(destination),cout));
     }
 
     public String getNom() {
         return nom;
     }
 
-    public List<ARC> getAdj() {
+    public ArrayList<Arc> getAdj() {
         return adj;
     }
 }
