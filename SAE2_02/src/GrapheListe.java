@@ -30,7 +30,7 @@ public class GrapheListe implements Graphe {
         int i = -1;
 
         Noeud dep = new Noeud(depart);
-        Noeud dest = new Noeud(depart);
+        Noeud dest = new Noeud(destination);
         for (Noeud n : ensNoeuds) {
             if (!trouve || !trouve2) {
                 if (!trouve) {
