@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +12,16 @@ public class GrapheListe implements Graphe {
     public GrapheListe() {
         ensNom = new ArrayList<>();
         ensNoeuds = new ArrayList<>();
+    }
+
+    public GrapheListe(String fichier) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fichier));
+        String[] s;
+        GrapheListe g = new GrapheListe();
+        while (br.ready()){
+            s = br.readLine().split("\t");
+            g.ajouterArc(s[0],s[1],Double.valueOf(s[2]));
+        }
     }
 
     public void ajouterArc(String depart, String destination, double cout) {
@@ -49,13 +63,18 @@ public class GrapheListe implements Graphe {
 
     public void insTrier(Noeud n){
         boolean trouver = false;
-        for(int i =0; i<ensNoeuds.size();i++){
-            if(ensNoeuds.get(i).getNom().compareTo(n.getNom())>0){
-                ensNoeuds.add(ensNoeuds.get(ensNoeuds.size()-1));
-                ensNom.add(ensNom.get(ensNom.size()-1));
-                for(int y = ensNoeuds.size()-2;y>i;y--){
-                    ensNoeuds.set(y,ensNoeuds.get(y-1));
-                    ensNom.set(y, ensNom.get(y-1));
+        for (int i = 0; i < ensNoeuds.size(); i++) {
+            int comp = ensNoeuds.get(i).getNom().compareTo(n.getNom());
+            if(comp ==0){
+                trouver = true;
+                break;
+            }
+            if (comp > 0) {
+                ensNoeuds.add(ensNoeuds.get(ensNoeuds.size() - 1));
+                ensNom.add(ensNom.get(ensNom.size() - 1));
+                for (int y = ensNoeuds.size() - 2; y > i; y--) {
+                    ensNoeuds.set(y, ensNoeuds.get(y - 1));
+                    ensNom.set(y, ensNom.get(y - 1));
                 }
                 ensNoeuds.set(i, n);
                 ensNom.set(i, n.getNom());
