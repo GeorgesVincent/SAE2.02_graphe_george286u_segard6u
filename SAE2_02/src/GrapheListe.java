@@ -13,31 +13,21 @@ public class GrapheListe implements Graphe {
     public void ajouterArc(String depart, String destination, double cout) {
         boolean trouve = false;
         boolean trouve2 = false;
-        int i = 0;
+        int i = -1;
 
         Noeud dep = new Noeud(depart);
         Noeud dest = new Noeud(depart);
         for (Noeud n : ensNoeuds) {
-            if (!trouve && !trouve2) {
-                trouve = dep.equals(n);
-                trouve2 = dest.equals(n);
-                if (trouve && trouve2) {
-                    break;
-                }
+            if (!trouve || !trouve2) {
                 if (!trouve) {
+                    trouve = dep.equals(n);
                     i++;
                 }
-            } else if (trouve) {
-                trouve2 = dest.equals(n);
-                if (trouve2) {
-                    break;
+                if (!trouve2) {
+                    trouve2 = dest.equals(n);
                 }
             } else {
-                trouve = dep.equals(n);
-                if (trouve) {
-                    break;
-                }
-                i++;
+                break;
             }
         }
 
@@ -49,29 +39,38 @@ public class GrapheListe implements Graphe {
                 insTrier(dep);
             } else {
                 ensNoeuds.add(dep);
+                ensNom.add(dep.getNom());
             }
         }
         if (!trouve2) {
             insTrier(dest);
         }
     }
-//////////////////////////////rajouter nom connard tu lira pas ça
-    public void insTrier(Noeud n){
+
+    public void insTrier(Noeud n) {
         boolean trouver = false;
-        for(int i =0; i<ensNoeuds.size();i++){
-            if(ensNoeuds.get(i).getNom().compareTo(n.getNom())>0){
-                ensNoeuds.add(ensNoeuds.get(ensNoeuds.size()-1));
-                for(int y = ensNoeuds.size()-2;y>i;y--){
-                    ensNoeuds.set(y,ensNoeuds.get(y-1));
+        for (int i = 0; i < ensNoeuds.size(); i++) {
+            int comp = ensNoeuds.get(i).getNom().compareTo(n.getNom());
+            if(comp ==0){
+                trouver = true;
+                break;
+            }
+            if (comp > 0) {
+                ensNoeuds.add(ensNoeuds.get(ensNoeuds.size() - 1));
+                ensNom.add(ensNom.get(ensNom.size() - 1));
+                for (int y = ensNoeuds.size() - 2; y > i; y--) {
+                    ensNoeuds.set(y, ensNoeuds.get(y - 1));
+                    ensNom.set(y, ensNom.get(y - 1));
                 }
-                ensNoeuds.set(i,n);
-                ensNom.set(i,n.getNom());
+                ensNoeuds.set(i, n);
+                ensNom.set(i, n.getNom());
                 trouver = true;
                 break;
             }
         }
-        if(!trouver){
+        if (!trouver) {
             ensNoeuds.add(n);
+            ensNom.add(n.getNom());
         }
     }
 
