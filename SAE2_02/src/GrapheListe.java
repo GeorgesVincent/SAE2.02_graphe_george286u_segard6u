@@ -13,31 +13,21 @@ public class GrapheListe implements Graphe {
     public void ajouterArc(String depart, String destination, double cout) {
         boolean trouve = false;
         boolean trouve2 = false;
-        int i = 0;
+        int i = -1;
 
         Noeud dep = new Noeud(depart);
         Noeud dest = new Noeud(depart);
         for (Noeud n : ensNoeuds) {
-            if (!trouve && !trouve2) {
-                trouve = dep.equals(n);
-                trouve2 = dest.equals(n);
-                if (trouve && trouve2) {
-                    break;
-                }
+            if (!trouve || !trouve2) {
                 if (!trouve) {
+                    trouve = dep.equals(n);
                     i++;
                 }
-            } else if (trouve) {
-                trouve2 = dest.equals(n);
-                if (trouve2) {
-                    break;
+                if (!trouve2) {
+                    trouve2 = dest.equals(n);
                 }
             } else {
-                trouve = dep.equals(n);
-                if (trouve && trouve2) {
-                    break;
-                }
-                i++;
+                break;
             }
         }
 
@@ -49,6 +39,7 @@ public class GrapheListe implements Graphe {
                 insTrier(dep);
             } else {
                 ensNoeuds.add(dep);
+                ensNom.add(dep.getNom());
             }
         }
         if (!trouve2) {
@@ -66,13 +57,13 @@ public class GrapheListe implements Graphe {
                     ensNoeuds.set(y,ensNoeuds.get(y-1));
                     ensNom.set(y, ensNom.get(y-1));
                 }
-                ensNoeuds.set(i,n);
-                ensNom.set(i,n.getNom());
+                ensNoeuds.set(i, n);
+                ensNom.set(i, n.getNom());
                 trouver = true;
                 break;
             }
         }
-        if(!trouver){
+        if (!trouver) {
             ensNoeuds.add(n);
             ensNom.add(n.getNom());
         }
