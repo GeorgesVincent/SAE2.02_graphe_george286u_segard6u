@@ -1,8 +1,14 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class GrapheListe implements Graphe {
     private List<String> ensNom;
     private List<Noeud> ensNoeuds;
+
+    public GrapheListe() {
+        ensNom = new ArrayList<>();
+        ensNoeuds = new ArrayList<>();
+    }
 
     public void ajouterArc(String depart, String destination, double cout) {
         boolean trouve = false;
@@ -39,22 +45,70 @@ public class GrapheListe implements Graphe {
             ensNoeuds.get(i).ajouterArc(destination, cout);
         } else {
             dep.ajouterArc(destination, cout);
-            ensNoeuds.add(dep);
-            ensNom.add(depart);
+            if (ensNoeuds.size() > 0) {
+                insTrier(dep);
+            } else {
+                ensNoeuds.add(dep);
+            }
         }
         if (!trouve2) {
-            ensNoeuds.add(dest);
-            ensNom.add(destination);
+            insTrier(dest);
+        }
+    }
+//////////////////////////////rajouter nom connard tu lira pas ça
+    public void insTrier(Noeud n){
+        boolean trouver = false;
+        for(int i =0; i<ensNoeuds.size();i++){
+            if(ensNoeuds.get(i).getNom().compareTo(n.getNom())>0){
+                ensNoeuds.add(ensNoeuds.get(ensNoeuds.size()-1));
+                for(int y = ensNoeuds.size()-2;y>i;y--){
+                    ensNoeuds.set(y,ensNoeuds.get(y-1));
+                }
+                ensNoeuds.set(i,n);
+                ensNom.set(i,n.getNom());
+                trouver = true;
+                break;
+            }
+        }
+        if(!trouver){
+            ensNoeuds.add(n);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        if (ensNom.size() > 0) {
+            for (Noeud n : ensNoeuds) {
+                s.append(n.getNom()).append(" -> ");
+                for (Arc a : n.getAdj()) {
+                    s.append(a.getDest()).append("(").append(a.getCout()).append(") ");
+                }
+                s.append("\n");
+            }
+            return s.toString();
+        } else {
+            return null;
         }
     }
 
     @Override
     public List<String> listeNoeuds() {
-        return null;
+        return ensNom;
     }
 
     @Override
     public List<Arc> suivants(String n) {
-        return null;
+        List<Arc> arcs = new ArrayList<>();
+        int i;
+        for (i = 0; i < ensNoeuds.size(); i++) {
+            if (n.equals(ensNoeuds.get(i).getNom())) {
+                break;
+            }
+        }
+        if (i < ensNoeuds.size()) {
+            arcs.addAll(ensNoeuds.get(i).getAdj());
+        }
+        return arcs;
     }
 }
