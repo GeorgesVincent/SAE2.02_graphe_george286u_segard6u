@@ -10,5 +10,6 @@ public class Main {
         g.ajouterArc("D","B",23);
         g.ajouterArc("D","C",10);
         g.ajouterArc("C","A",19);
+        System.out.println(g.toGraphViz());
     }
 }

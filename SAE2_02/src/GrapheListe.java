@@ -34,7 +34,7 @@ public class GrapheListe implements Graphe {
                 }
             } else {
                 trouve = dep.equals(n);
-                if (trouve) {
+                if (trouve && trouve2) {
                     break;
                 }
                 i++;
@@ -55,14 +55,16 @@ public class GrapheListe implements Graphe {
             insTrier(dest);
         }
     }
-//////////////////////////////rajouter nom connard tu lira pas ça
+
     public void insTrier(Noeud n){
         boolean trouver = false;
         for(int i =0; i<ensNoeuds.size();i++){
             if(ensNoeuds.get(i).getNom().compareTo(n.getNom())>0){
                 ensNoeuds.add(ensNoeuds.get(ensNoeuds.size()-1));
+                ensNom.add(ensNom.get(ensNom.size()-1));
                 for(int y = ensNoeuds.size()-2;y>i;y--){
                     ensNoeuds.set(y,ensNoeuds.get(y-1));
+                    ensNom.set(y, ensNom.get(y-1));
                 }
                 ensNoeuds.set(i,n);
                 ensNom.set(i,n.getNom());
@@ -72,6 +74,7 @@ public class GrapheListe implements Graphe {
         }
         if(!trouver){
             ensNoeuds.add(n);
+            ensNom.add(n.getNom());
         }
     }
 
@@ -86,6 +89,23 @@ public class GrapheListe implements Graphe {
                 }
                 s.append("\n");
             }
+            return s.toString();
+        } else {
+            return null;
+        }
+    }
+
+    public String toGraphViz(){
+        StringBuilder s = new StringBuilder();
+        s.append("digraph G {\n");
+        if (ensNom.size() > 0) {
+            for (Noeud n : ensNoeuds) {
+                for (Arc a : n.getAdj()) {
+                    s.append(n.getNom()).append(" -> ");
+                    s.append(a.getDest()).append(" [label = ").append((int)a.getCout()).append(" ]\n");
+                }
+            }
+            s.append("}");
             return s.toString();
         } else {
             return null;
