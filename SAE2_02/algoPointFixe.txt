@@ -1,0 +1,27 @@
+fonction pointFixe(Graphe g InOut, Noeud depart)
+    fin <- faux
+    l <- listevide
+    pour i de 0 à g.taille -1 faire
+        si g.obtenir(i) = depart faire
+            l <- l.ajouter(0)
+        sinon l <- ajouter(+infini)
+        fsi
+    fpour
+        tant que non fin faire
+            fin <- vrai
+            pour i de 0 à g.taille -1 faire
+                    lsuiv <- g.obtenir(i).suivants()
+                    pour chaque arc dans lsuiv faire
+                        pour i de 0 à g.taille -1 faire
+                            si g.obtenir(i) = arc.Noeud faire
+                                pos<- i
+                            fsi
+                        fpour
+                        si l.obtenir(i)+arc.coût<l.obtenir(pos) faire
+                           l.remplacer(pos,l.obtenir(i)+arc.coût)
+                           fin <- faux
+                        fsi
+                    fpour
+            fpour
+        ftant
+fin

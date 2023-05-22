@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +14,21 @@ public class GrapheListe implements Graphe {
     public GrapheListe(String fichier) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fichier));
         String[] s;
-        GrapheListe g = new GrapheListe();
+        ensNom = new ArrayList<>();
+        ensNoeuds = new ArrayList<>();
         while (br.ready()){
             s = br.readLine().split("\t");
-            g.ajouterArc(s[0],s[1],Double.valueOf(s[2]));
+            this.ajouterArc(s[0],s[1],Double.parseDouble(s[2]));
         }
+        br.close();
     }
 
     public void ajouterArc(String depart, String destination, double cout) {
         boolean trouve = false;
         boolean trouve2 = false;
         int i = -1;
-
         Noeud dep = new Noeud(depart);
-        Noeud dest = new Noeud(depart);
+        Noeud dest = new Noeud(destination);
         for (Noeud n : ensNoeuds) {
             if (!trouve || !trouve2) {
                 if (!trouve) {
@@ -56,12 +54,12 @@ public class GrapheListe implements Graphe {
                 ensNom.add(dep.getNom());
             }
         }
-        if (!trouve2) {
+        if (!trouve2 && !dep.equals(dest)) {
             insTrier(dest);
         }
     }
 
-    public void insTrier(Noeud n){
+    public void insTrier(Noeud n){ // faire une comparaison char by char pour régler le problème avec nombre comme nom
         boolean trouver = false;
         for (int i = 0; i < ensNoeuds.size(); i++) {
             int comp = ensNoeuds.get(i).getNom().compareTo(n.getNom());
@@ -121,7 +119,6 @@ public class GrapheListe implements Graphe {
             return null;
         }
     }
-
     @Override
     public List<String> listeNoeuds() {
         return ensNom;
@@ -140,5 +137,22 @@ public class GrapheListe implements Graphe {
             arcs.addAll(ensNoeuds.get(i).getAdj());
         }
         return arcs;
+    }
+    public static void fichierListeArc(String fichier) throws IOException {
+        BufferedReader bf = new BufferedReader(new FileReader(fichier));
+        FileWriter fw = new FileWriter(fichier+"res");
+        String[] s;
+        String[] arcs;
+        s= bf.readLine().split("\t");
+        while(bf.ready()){
+            arcs = bf.readLine().split("\t");
+            for (int i = 1;i<s.length;i++){
+                if(arcs[i].charAt(0)!='0'){
+                    fw.write(arcs[0]+" "+s[i]+" "+ arcs[i]+"\n");
+                }
+            }
+        }
+        fw.close();
+        bf.close();
     }
 }
