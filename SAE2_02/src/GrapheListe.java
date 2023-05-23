@@ -3,7 +3,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class GrapheListe implements Graphe {
@@ -65,37 +64,16 @@ public class GrapheListe implements Graphe {
 
     public void insTrier(Noeud n) {
         boolean trouver = false;
-        int comp;
-        int comp2;
-        for (int i = 0; i < ensNom.size(); i++) {
-            comp = 0;
-            comp2 = 0;
-            int nl = n.getNom().length();
-            int noml = ensNom.get(i).length();
-            if (nl > noml) {
-                for (int x = nl - 1; x >= 0; x--) {
-                    comp2 += (int) (n.getNom().charAt(nl - x - 1) * Math.pow(128, x));
-                    if (x >= nl - noml) {
-                        comp += (int) (ensNom.get(i).charAt(nl - x - 1)* Math.pow(128, x));
-                    }
-                }
-            } else {
-                for (int x = noml - 1; x >= 0; x--) {
-                    comp += (int) (ensNom.get(i).charAt(noml - x - 1) * Math.pow(128, x));
-                    if (x >= noml - nl) {
-                        comp2 += (int) (n.getNom().charAt(noml - x - 1) * Math.pow(128, x));
-                    }
-                }
-            }
-            comp -= comp2;
-            if (comp == 0) {
+        for (int i = 0; i < ensNoeuds.size(); i++) {
+            int comp = ensNoeuds.get(i).getNom().compareTo(n.getNom());
+            if(comp ==0){
                 trouver = true;
                 break;
             }
             if (comp > 0) {
                 ensNoeuds.add(ensNoeuds.get(ensNoeuds.size() - 1));
                 ensNom.add(ensNom.get(ensNom.size() - 1));
-                for (int y = ensNom.size() - 2; y > i; y--) {
+                for (int y = ensNoeuds.size() - 2; y > i; y--) {
                     ensNoeuds.set(y, ensNoeuds.get(y - 1));
                     ensNom.set(y, ensNom.get(y - 1));
                 }
@@ -167,7 +145,7 @@ public class GrapheListe implements Graphe {
 
     public static void fichierListeArc(String fichier) throws IOException {
         BufferedReader bf = new BufferedReader(new FileReader(fichier));
-        FileWriter fw = new FileWriter(fichier + "res");
+        FileWriter fw = new FileWriter(fichier.replaceAll(".txt","res.txt"));
         String[] s;
         String[] arcs;
         s = bf.readLine().split("\t");
