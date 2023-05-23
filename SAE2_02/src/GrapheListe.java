@@ -1,5 +1,9 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GrapheListe implements Graphe {
@@ -16,9 +20,9 @@ public class GrapheListe implements Graphe {
         String[] s;
         ensNom = new ArrayList<>();
         ensNoeuds = new ArrayList<>();
-        while (br.ready()){
+        while (br.ready()) {
             s = br.readLine().split("\t");
-            this.ajouterArc(s[0],s[1],Double.parseDouble(s[2]));
+            this.ajouterArc(s[0], s[1], Double.parseDouble(s[2]));
         }
         br.close();
     }
@@ -59,18 +63,39 @@ public class GrapheListe implements Graphe {
         }
     }
 
-    public void insTrier(Noeud n){ // faire une comparaison char by char pour régler le problème avec nombre comme nom
+    public void insTrier(Noeud n) {
         boolean trouver = false;
-        for (int i = 0; i < ensNoeuds.size(); i++) {
-            int comp = ensNoeuds.get(i).getNom().compareTo(n.getNom());
-            if(comp ==0){
+        int comp;
+        int comp2;
+        for (int i = 0; i < ensNom.size(); i++) {
+            comp = 0;
+            comp2 = 0;
+            int nl = n.getNom().length();
+            int noml = ensNom.get(i).length();
+            if (nl > noml) {
+                for (int x = nl - 1; x >= 0; x--) {
+                    comp2 += (int) (n.getNom().charAt(nl - x - 1) * Math.pow(128, x));
+                    if (x >= nl - noml) {
+                        comp += (int) (ensNom.get(i).charAt(nl - x - 1)* Math.pow(128, x));
+                    }
+                }
+            } else {
+                for (int x = noml - 1; x >= 0; x--) {
+                    comp += (int) (ensNom.get(i).charAt(noml - x - 1) * Math.pow(128, x));
+                    if (x >= noml - nl) {
+                        comp2 += (int) (n.getNom().charAt(noml - x - 1) * Math.pow(128, x));
+                    }
+                }
+            }
+            comp -= comp2;
+            if (comp == 0) {
                 trouver = true;
                 break;
             }
             if (comp > 0) {
                 ensNoeuds.add(ensNoeuds.get(ensNoeuds.size() - 1));
                 ensNom.add(ensNom.get(ensNom.size() - 1));
-                for (int y = ensNoeuds.size() - 2; y > i; y--) {
+                for (int y = ensNom.size() - 2; y > i; y--) {
                     ensNoeuds.set(y, ensNoeuds.get(y - 1));
                     ensNom.set(y, ensNom.get(y - 1));
                 }
@@ -103,14 +128,14 @@ public class GrapheListe implements Graphe {
         }
     }
 
-    public String toGraphViz(){
+    public String toGraphViz() {
         StringBuilder s = new StringBuilder();
         s.append("digraph G {\n");
         if (ensNom.size() > 0) {
             for (Noeud n : ensNoeuds) {
                 for (Arc a : n.getAdj()) {
                     s.append(n.getNom()).append(" -> ");
-                    s.append(a.getDest()).append(" [label = ").append((int)a.getCout()).append(" ]\n");
+                    s.append(a.getDest()).append(" [label = ").append((int) a.getCout()).append(" ]\n");
                 }
             }
             s.append("}");
@@ -119,6 +144,7 @@ public class GrapheListe implements Graphe {
             return null;
         }
     }
+
     @Override
     public List<String> listeNoeuds() {
         return ensNom;
@@ -138,17 +164,18 @@ public class GrapheListe implements Graphe {
         }
         return arcs;
     }
+
     public static void fichierListeArc(String fichier) throws IOException {
         BufferedReader bf = new BufferedReader(new FileReader(fichier));
-        FileWriter fw = new FileWriter(fichier+"res");
+        FileWriter fw = new FileWriter(fichier + "res");
         String[] s;
         String[] arcs;
-        s= bf.readLine().split("\t");
-        while(bf.ready()){
+        s = bf.readLine().split("\t");
+        while (bf.ready()) {
             arcs = bf.readLine().split("\t");
-            for (int i = 1;i<s.length;i++){
-                if(arcs[i].charAt(0)!='0'){
-                    fw.write(arcs[0]+" "+s[i]+" "+ arcs[i]+"\n");
+            for (int i = 1; i < s.length; i++) {
+                if (arcs[i].charAt(0) != '0') {
+                    fw.write(arcs[0] + " " + s[i] + " " + arcs[i] + "\n");
                 }
             }
         }
