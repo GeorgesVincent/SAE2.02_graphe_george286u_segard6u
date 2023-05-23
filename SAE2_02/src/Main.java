@@ -7,5 +7,6 @@ public class Main {
         System.out.println(g.toString());
         BellmanFord b = new BellmanFord();
         System.out.println(b.resoudre(g,"1").toString());
+        g.fichierListeArc("Graphes/Matrice_adjacence.txt");
     }
 }

@@ -160,4 +160,8 @@ public class GrapheListe implements Graphe {
         fw.close();
         bf.close();
     }
+
+    public List<Noeud> getEnsNoeuds() {
+        return ensNoeuds;
+    }
 }
