@@ -6,5 +6,6 @@ public class Main {
         GrapheListe g = new GrapheListe("Graphes/Graphe202.txt");
         System.out.println(g.toGraphViz());
         System.out.println(g.toString());
+        g.fichierListeArc("Graphes/Matrice_adjacence.txt");
     }
 }

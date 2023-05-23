@@ -167,7 +167,7 @@ public class GrapheListe implements Graphe {
 
     public static void fichierListeArc(String fichier) throws IOException {
         BufferedReader bf = new BufferedReader(new FileReader(fichier));
-        FileWriter fw = new FileWriter(fichier + "res");
+        FileWriter fw = new FileWriter("resGraphe");
         String[] s;
         String[] arcs;
         s = bf.readLine().split("\t");
@@ -181,5 +181,9 @@ public class GrapheListe implements Graphe {
         }
         fw.close();
         bf.close();
+    }
+
+    public List<Noeud> getEnsNoeuds() {
+        return ensNoeuds;
     }
 }
