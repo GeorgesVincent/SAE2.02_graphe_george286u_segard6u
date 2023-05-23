@@ -86,15 +86,13 @@ public class Valeur {
     }
 
     public List<String> calculerChemin(String destination){
-        String s;
+        String s =destination;
         List<String> ch = new ArrayList<>();
         ch.add(destination);
-        s = this.getParent(destination);
         while (this.getParent(s) != null){
-            ch.add(s);
             s = this.getParent(s);
+            ch.add(s);
         }
-        ch.add(s);
         Collections.reverse(ch);
         return  ch;
     }

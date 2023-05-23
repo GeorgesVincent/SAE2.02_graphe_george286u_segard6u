@@ -6,7 +6,9 @@ public class Main {
         System.out.println(g.toGraphViz());
         System.out.println(g.toString());
         BellmanFord b = new BellmanFord();
-        System.out.println(b.resoudre(g,"1").toString());
-        g.fichierListeArc("Graphes/Matrice_adjacence.txt");
+        GrapheListe.fichierListeArc("Graphes/Matrice_adjacence.txt");
+        Valeur v = b.resoudre(g,"1");
+        System.out.println(v.toString());
+        v.calculerChemin("1");
     }
 }
