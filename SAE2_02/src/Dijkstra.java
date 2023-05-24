@@ -1,8 +1,7 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Dijkstra {
-//    Entrees :
+    //    Entrees :
 //    G un graphe oriente avec une ponderation (poids) positive des arcs
 //    A un sommet (depart) de G
 //
@@ -27,41 +26,32 @@ public class Dijkstra {
 //      Fin Pour
 //    Fin Tant que
 //    Fin
-
-    public Valeur resoudre(Graphe g, String depart){
+    public Valeur resoudre(Graphe g, String depart) {
         ArrayList<Noeud> q = new ArrayList<>();
         Valeur v = new Valeur();
-        double dis;
-        double min = Double.MAX_VALUE;
-        double d;
-        Noeud u = null;
-        for (Noeud n : ((GrapheListe)g).getEnsNoeuds()){
-            v.setParent(n.getNom(),null);
-            v.setValeur(n.getNom(),Double.MAX_VALUE);
+        for (Noeud n : ((GrapheListe) g).getEnsNoeuds()) {
+            v.setParent(n.getNom(), null);
             q.add(n);
+            if (n.getNom().equals(depart)) {
+                v.setValeur(n.getNom(), 0);
+            } else {
+                v.setValeur(n.getNom(), Double.MAX_VALUE);
+            }
         }
-
-        v.setValeur(depart,0);
-        while (!q.isEmpty()){
-            //recherche minimum
-            for (Noeud no : q){
-                dis = v.getValeur(no.getNom());
-                if (dis < min){
-
-                    //min = dis;
-                    u = no;
+        while (!q.isEmpty()) {
+            Noeud min = null;
+            for (Noeud n : q) {
+                if (min == null) {
+                    min = n;
+                } else if (v.getValeur(min.getNom()) > v.getValeur(n.getNom())) {
+                    min = n;
                 }
             }
-            q.remove(u);
-            for (Noeud n : q){
-                for (Arc ar : n.getAdj()){
-                    if (ar.getDest().equals(u.getNom())){
-                        d = (v.getValeur(u.getNom()) + ar.getCout());
-                        if (d < v.getValeur(n.getNom())){
-                            v.setParent(n.getNom(),u.getNom());
-                            v.setValeur(n.getNom(),d);
-                        }
-                    }
+            q.remove(min);
+            for (Arc a : g.suivants(min.getNom())) {
+                if (v.getValeur(min.getNom()) + a.getCout() < v.getValeur(a.getDest())) {
+                    v.setValeur(a.getDest(), v.getValeur(min.getNom()) + a.getCout());
+                    v.setParent(a.getDest(), min.getNom());
                 }
             }
         }

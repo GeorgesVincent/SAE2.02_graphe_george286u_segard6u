@@ -96,5 +96,4 @@ public class Valeur {
         Collections.reverse(ch);
         return  ch;
     }
-
 }

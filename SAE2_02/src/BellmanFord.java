@@ -1,4 +1,4 @@
-public class BellmanFord {
+public class BellmanFord {//v5 de l'algo enfin fonctionnelle
     public Valeur resoudre(Graphe g, String depart) {
         Valeur v = new Valeur();
         boolean fin = false;
@@ -11,16 +11,14 @@ public class BellmanFord {
         }
         while (!fin) {
             fin = true;
-            String antecedant = depart;
-            while(antecedant!=null) {
-                for (Arc a : g.suivants(antecedant)) {
-                    if (v.getValeur(antecedant) + a.getCout() < v.getValeur(a.getDest())) {
-                        v.setValeur(a.getDest(), v.getValeur(antecedant) + a.getCout());
-                        v.setParent(antecedant,a.getDest());
-                        fin = false;
+            for (String s : g.listeNoeuds()) {
+                    for (Arc a : g.suivants(s)) {
+                        if (v.getValeur(s) + a.getCout() < v.getValeur(a.getDest())) {
+                            v.setValeur(a.getDest(), v.getValeur(s) + a.getCout());
+                            v.setParent(a.getDest(), s);
+                            fin = false;
+                        }
                     }
-                }
-                antecedant = v.getParent(antecedant);
             }
         }
         return v;
