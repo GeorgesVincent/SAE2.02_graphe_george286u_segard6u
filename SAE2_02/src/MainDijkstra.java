@@ -7,8 +7,8 @@ public class MainDijkstra {
         Dijkstra d = new Dijkstra();
         Valeur v = d.resoudre(g,"1");
         System.out.println(v.toString());
-        System.out.println(v.calculerChemin("C"));
-        for (String s : v.calculerChemin("C")){
+        List<String> ls = v.calculerChemin("1");
+        for (String s : ls){
             System.out.println(s);
         }
     }
