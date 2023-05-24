@@ -85,16 +85,33 @@ public class Valeur {
 
     }
 
-    public List<String> calculerChemin(String destination){
-        String s =destination;
+    public List<String> calculerChemin(String destination) {
+        String s = destination;
+        String der="";
         List<String> ch = new ArrayList<>();
         ch.add(destination);
-        while (this.getParent(s) != null){
-            s = this.getParent(s);
-            ch.add(s);
+        Set<String> keys = parent.keySet();
+        boolean fin = false;
+        int i = 0;
+        while (!fin) {
+            for (String key : keys) {
+                i++;
+                if (parent.get(key) != null) {
+                    if (parent.get(key).equals(s)) {
+                        ch.add(key);
+                        s = key;
+                        i=0;
+                    }
+                } else {
+                    der = key;
+                }
+                if (i> keys.size()){
+                    fin = true;
+                }
+            }
         }
+        ch.add(der);
         Collections.reverse(ch);
-        return  ch;
+        return ch;
     }
-
 }

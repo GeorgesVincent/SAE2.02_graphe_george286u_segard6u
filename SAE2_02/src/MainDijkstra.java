@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 
 public class MainDijkstra {
     public static void main(String[] args) throws IOException {
@@ -6,6 +7,9 @@ public class MainDijkstra {
         Dijkstra d = new Dijkstra();
         Valeur v = d.resoudre(g,"A");
         System.out.println(v.toString());
-        System.out.println(v.calculerChemin("C"));
+        List<String> ls = v.calculerChemin("C");
+        for (String s : ls){
+            System.out.println(s);
+        }
     }
 }
