@@ -88,10 +88,18 @@ public class Valeur {
     public List<String> calculerChemin(String destination) {
         String s = destination;
         List<String> ch = new ArrayList<>();
-        ch.add(destination);
         Set<String> keys = parent.keySet();
-        boolean fin = false;
+        boolean fin = true;
         int i = 0;
+        for (String key : keys){
+            if(parent.get(key)!=null) {
+                if (parent.get(key).equals(destination)) {
+                    ch.add(destination);
+                    fin = false;
+                    break;
+                }
+            }
+        }
         while (!fin) {
             for (String key : keys) {
                 i++;

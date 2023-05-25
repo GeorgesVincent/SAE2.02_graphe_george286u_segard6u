@@ -9,6 +9,8 @@ public class GrapheListe implements Graphe {
     private List<String> ensNom;
     private List<Noeud> ensNoeuds;
 
+    private int NBArc;
+
     public GrapheListe() {
         ensNom = new ArrayList<>();
         ensNoeuds = new ArrayList<>();
@@ -22,8 +24,40 @@ public class GrapheListe implements Graphe {
         while (br.ready()) {
             s = br.readLine().split("\t");
             this.ajouterArc(s[0], s[1], Double.parseDouble(s[2]));
+            NBArc ++;
         }
         br.close();
+    }
+    public void genererGraphe(String depart,String arriver,int nb){
+        ArrayList<Noeud> graphe = new ArrayList<>();
+        graphe.add(new Noeud(depart));
+        {
+            boolean deptrouver = false;
+            boolean arrtrouver = false;
+            for (int i = 0; i < nb; i++) {
+                if (String.valueOf(i).equals(depart)) {
+                    deptrouver = true;
+                } else if (String.valueOf(i).equals(arriver)) {
+                    arrtrouver = true;
+                } else {
+                    graphe.add(new Noeud(String.valueOf(i)));
+                }
+                if (!deptrouver && !arrtrouver&&i>nb-2) {
+                    i += 2;
+                }
+            }
+        }
+        graphe.add(new Noeud(arriver));
+        for(int i =0;i<graphe.size();i++){
+            ArrayList<Noeud> noeudnonlie = new ArrayList<>(graphe);
+            noeudnonlie.remove(i);
+            int nbarc =(int) (Math.random()* noeudnonlie.size());
+            for (int x =0;x<=nbarc;x++){
+                Noeud rdm = noeudnonlie.get((int)(Math.random()*noeudnonlie.size()));
+                this.ajouterArc(graphe.get(i).getNom(),rdm.getNom(),Math.random()*100);
+                noeudnonlie.remove(rdm);
+            }
+        }
     }
 
     public void ajouterArc(String depart, String destination, double cout) {
@@ -48,8 +82,10 @@ public class GrapheListe implements Graphe {
 
         if (trouve) {
             ensNoeuds.get(i).ajouterArc(destination, cout);
+            NBArc ++;
         } else {
             dep.ajouterArc(destination, cout);
+            NBArc ++;
             if (ensNoeuds.size() > 0) {
                 insTrier(dep);
             } else {
@@ -159,6 +195,10 @@ public class GrapheListe implements Graphe {
         }
         fw.close();
         bf.close();
+    }
+
+    public int getNBArc() {
+        return NBArc;
     }
 
     public List<Noeud> getEnsNoeuds() {
