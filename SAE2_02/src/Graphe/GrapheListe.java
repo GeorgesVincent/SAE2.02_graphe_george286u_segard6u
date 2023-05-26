@@ -13,11 +13,19 @@ public class GrapheListe implements Graphe {
 
     private int NBArc;
 
+    /**
+     * Constructeur vide
+     */
     public GrapheListe() {
         ensNom = new ArrayList<>();
         ensNoeuds = new ArrayList<>();
     }
 
+    /**
+     * Constructeur avec parametre
+     * @param fichier Nom du fichier
+     * @throws IOException
+     */
     public GrapheListe(String fichier) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fichier));
         String[] s;
@@ -30,6 +38,13 @@ public class GrapheListe implements Graphe {
         }
         br.close();
     }
+
+    /**
+     * Genere un graphe avec un noeud de depart, un noeud d'ariver et un nombre
+     * @param depart nom du noeud de depart
+     * @param arriver nom du noeud d'arriver
+     * @param nb  nombre
+     */
     public void genererGraphe(String depart,String arriver,int nb){
         ArrayList<Noeud> graphe = new ArrayList<>();
         graphe.add(new Noeud(depart));
@@ -62,6 +77,12 @@ public class GrapheListe implements Graphe {
         }
     }
 
+    /**
+     * methode qui ajoute un Arc a un graphe
+     * @param depart nom du noeud de depart
+     * @param destination nom du noeud d'arriver
+     * @param cout cout de l'arc
+     */
     public void ajouterArc(String depart, String destination, double cout) {
         boolean trouve = false;
         boolean trouve2 = false;
@@ -100,6 +121,10 @@ public class GrapheListe implements Graphe {
         }
     }
 
+    /**
+     * methode qui trie un graphe avec un noeud
+     * @param n noeud que l'on veut trier dans le graphe
+     */
     public void insTrier(Noeud n) {
         boolean trouver = false;
         for (int i = 0; i < ensNoeuds.size(); i++) {
@@ -127,6 +152,10 @@ public class GrapheListe implements Graphe {
         }
     }
 
+    /**
+     * methode toString
+     * @return chaine qui decrit le graphe
+     */
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -144,6 +173,10 @@ public class GrapheListe implements Graphe {
         }
     }
 
+    /**
+     * methode qui traduit un graphe pour graphViz
+     * @return chaine qui decrit le graphe pour graphViz
+     */
     public String toGraphViz() {
         StringBuilder s = new StringBuilder();
         s.append("digraph G {\n");
@@ -161,6 +194,10 @@ public class GrapheListe implements Graphe {
         }
     }
 
+    /**
+     * getter de ensNom
+     * @return ensNom
+     */
     @Override
     public List<String> listeNoeuds() {
         return ensNom;
@@ -181,6 +218,11 @@ public class GrapheListe implements Graphe {
         return arcs;
     }
 
+    /**
+     * methode qui liste les arc d'un graphe dans un fichier
+     * @param fichier nom du fichier
+     * @throws IOException
+     */
     public static void fichierListeArc(String fichier) throws IOException {
         BufferedReader bf = new BufferedReader(new FileReader(fichier));
         FileWriter fw = new FileWriter(fichier.replaceAll(".txt","res.txt"));
