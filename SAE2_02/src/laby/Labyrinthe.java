@@ -1,13 +1,8 @@
 package laby;
 
-import Graphe.Graphe;
-import Graphe.GrapheLabyrinthe;
-import Graphe.GrapheListe;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -146,11 +141,6 @@ public class Labyrinthe {
         }
         return courante;
     }
-
-    public Graphe genererGraphe() {
-        return new GrapheLabyrinthe(this);
-    }
-
 
     /**
      * jamais fini

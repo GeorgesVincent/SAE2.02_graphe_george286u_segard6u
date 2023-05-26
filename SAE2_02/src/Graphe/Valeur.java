@@ -88,18 +88,25 @@ public class Valeur {
     }
 
     /**
-     * methode qui calcul le chemin minimum
+     * methode qui retourne une chaine qui représente le chemin minimum
      * @param destination noeud de destination
      * @return liste de string qui represente le nom des noeud
      */
     public List<String> calculerChemin(String destination) {
         String s = destination;
+        //list de chaine  destiné à contenir le chemin
         List<String> ch = new ArrayList<>();
+        //liste des enfants existants
         Set<String> keys = parent.keySet();
+        //booleen qui permet de savoir si le chemin est terminer
         boolean fin = true;
         int i = 0;
-        for (String key : keys){
-            if(parent.get(key)!=null) {
+        //parcours de tout les parents
+        for (String key : keys) {
+            //verifie qu'il y a un parent pour l'enfant actuelle
+            if (parent.get(key) != null) {
+                //ajoute la destination a la liste si elle existe dans les enfants
+                //si elle existent pas la suite du programme ne s'éxécute pas et retourne la liste encore vide
                 if (parent.get(key).equals(destination)) {
                     ch.add(destination);
                     fin = false;
@@ -107,6 +114,7 @@ public class Valeur {
                 }
             }
         }
+        //tant que le chemin minimal n'a pas était ajouter dans la liste
         while (!fin) {
             for (String key : keys) {
                 i++;
@@ -114,14 +122,15 @@ public class Valeur {
                     if (parent.get(key).equals(s)) {
                         ch.add(key);
                         s = key;
-                        i=0;
+                        i = 0;
                     }
                 }
-                if (i> keys.size()){
+                if (i > keys.size()) {
                     fin = true;
                 }
             }
         }
+        // inverse l'ordre pour avoir la destination a la fin et le départ au début
         Collections.reverse(ch);
         return ch;
     }

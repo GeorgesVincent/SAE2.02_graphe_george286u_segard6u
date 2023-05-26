@@ -14,9 +14,9 @@ public class Main {
         //System.out.println(v.toString());
         //v.calculerChemin("1");
         GrapheListe g = new GrapheListe();
-        g.genererGraphe("2","6",20);
+        g.genererGraphe("2", "6", 20);
         System.out.println(g.toGraphViz());
         Dijkstra d = new Dijkstra();
-        System.out.println(d.resoudre(g,"2").toString());
+        System.out.println(d.resoudre(g, "2").toString());
     }
 }

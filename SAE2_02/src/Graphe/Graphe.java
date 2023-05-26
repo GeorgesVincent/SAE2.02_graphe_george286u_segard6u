@@ -9,6 +9,4 @@ public interface Graphe {
 
     //retourne la liste des arcs partant du noeud n passe en parametre
     List<Arc> suivants(String n);
-
-    List<Noeud> getEnsNoeuds();
 }

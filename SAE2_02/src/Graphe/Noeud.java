@@ -1,37 +1,40 @@
 package Graphe;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Noeud {
     private String nom;
     private List<Arc> adj;
-    public Noeud(String name){
+
+    public Noeud(String name) {
         nom = name;
-        adj= new ArrayList<>();
+        adj = new ArrayList<>();
     }
 
     /**
      * methode pour comparer des noeud
      * @param o noeud acvec lequel on veut comparer
-     * @return boolean
+     * @return true si == sinon false
      */
     @Override
-    public boolean equals(Object o){
-        if(o instanceof Noeud){
+    public boolean equals(Object o) {
+
+        if (o instanceof Noeud) {
             return ((Noeud) o).getNom().equals(this.nom);
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     /**
      * methode qui ajoute un arc a un noeud
+     *
      * @param destination noeud de destination
-     * @param cout cout de l'arc
+     * @param cout        cout de l'arc
      */
-    public void ajouterArc(String destination, double cout){
-        adj.add(new Arc(new Noeud(destination),cout));
+    public void ajouterArc(String destination, double cout) {
+        adj.add(new Arc(new Noeud(destination), cout));
     }
 
     public String getNom() {

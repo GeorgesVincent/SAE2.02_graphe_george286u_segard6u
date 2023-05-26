@@ -31,32 +31,42 @@ public class Dijkstra {
 
     /**
      * Méthode qui résoud un graphe avec un point de depart donne
-     * @param g Graphe que l'on veut resoudre
+     * @param g      Graphe que l'on veut resoudre
      * @param depart Nom du noeud de depart
      * @return objet Valeur
      */
     public Valeur resoudre(Graphe g, String depart) {
+        //liste qui contiendra les noeud pas encore parcouru
         ArrayList<Noeud> q = new ArrayList<>();
+        // objet Valeur possédant le chemin minimal qui sera retourné à la fin de la méthode
         Valeur v = new Valeur();
-        for (Noeud n : g.getEnsNoeuds()) {
-            v.setParent(n.getNom(), null);
-            q.add(n);
-            if (n.getNom().equals(depart)) {
-                v.setValeur(n.getNom(), 0);
+        //ajoute a la liste tous les noeud du graphe et les initialise dans l'objet Valeur qui sera retourné
+        for (String n : g.listeNoeuds()) {
+            v.setParent(n, null);
+            q.add(new Noeud(n));
+            if (n.equals(depart)) {
+                v.setValeur(n, 0);
             } else {
-                v.setValeur(n.getNom(), Double.MAX_VALUE);
+                v.setValeur(n, Double.MAX_VALUE);
             }
         }
+        //effectue des itération jusqu'à ce que tous les noeuds ai était parcourus
         while (!q.isEmpty()) {
+            //initialisation du Noeud qui contiendra la Valeur minimal à null
             Noeud min = null;
+            //recherche le Noeud pour lequel la valeur est celle du chemin minimal
             for (Noeud n : q) {
                 if (min == null) {
+                    //initialise le Noeud min au premier Noeud de la liste pour eviter les nullpointerException et pour que le dernier Noeud soit parcouru
                     min = n;
+                    //remplace le Noeud Minimal actuelle par un autre Noeud pas encore parcouru pour lequel le chemin est plus petit
                 } else if (v.getValeur(min.getNom()) > v.getValeur(n.getNom())) {
                     min = n;
                 }
             }
+            //supprission du Noeud minimal dans la liste des noeud parcouru pour ne pas le reparcourir
             q.remove(min);
+            //initialise les valeur des Noeuds dont il est le parent à de nouvelle valeur si la valeur actuelle est la minimal
             for (Arc a : g.suivants(min.getNom())) {
                 if (v.getValeur(min.getNom()) + a.getCout() < v.getValeur(a.getDest())) {
                     v.setValeur(a.getDest(), v.getValeur(min.getNom()) + a.getCout());

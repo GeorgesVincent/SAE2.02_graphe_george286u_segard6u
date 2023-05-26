@@ -5,13 +5,13 @@ public class Arc {
     private double cout;
 
     /**
-     * Constructeur
-     * @param n Noeud destination
+     * Constructeur qui construit un chemin entre 2 points
+     * @param n    Noeud destination
      * @param cout cout de l'arc
      */
     public Arc(Noeud n, double cout) {
         this.dest = n.getNom();
-        if (cout>=0){
+        if (cout >= 0) {
             this.cout = cout;
         }
     }

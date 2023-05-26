@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 public class ComparerGrapheGenerer {
     public static void main(String[] args) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter("ComparerGrapheGenerer.txt"));
+        //écris le nom des colonnes en première ligne du fichiers
         pw.write("Nom du Graphe.Graphe    \tTemps_BellmanFord\tTemps_Dijkstra    \tMoy d'Arcs/Graphe.Noeud \tRatio\n");
         double ratio_moy = 0;
         long tempsB_moy = 0;
