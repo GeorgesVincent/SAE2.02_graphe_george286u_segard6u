@@ -1,3 +1,7 @@
+import Graphe.Dijkstra;
+import Graphe.GrapheListe;
+import Graphe.Valeur;
+
 import java.io.IOException;
 import java.util.List;
 

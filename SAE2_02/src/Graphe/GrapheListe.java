@@ -1,3 +1,5 @@
+package Graphe;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -42,13 +44,13 @@ public class GrapheListe implements Graphe {
                 } else {
                     graphe.add(new Noeud(String.valueOf(i)));
                 }
-                if (!deptrouver && !arrtrouver&&i>nb-2) {
+                if ((!deptrouver || !arrtrouver)&&i>nb-2) {
                     i += 2;
                 }
             }
         }
         graphe.add(new Noeud(arriver));
-        for(int i =0;i<graphe.size();i++){
+        for(int i =0;i<graphe.size()-1;i++){
             ArrayList<Noeud> noeudnonlie = new ArrayList<>(graphe);
             noeudnonlie.remove(i);
             int nbarc =(int) (Math.random()* noeudnonlie.size());

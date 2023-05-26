@@ -1,4 +1,4 @@
-fonction pointFixe(Graphe g InOut, Noeud depart)
+fonction pointFixe(Graphe.Graphe g InOut, Graphe.Noeud depart)
     fin <- faux
     l <- listevide
     pour i de 0 à g.taille -1 faire
@@ -13,7 +13,7 @@ fonction pointFixe(Graphe g InOut, Noeud depart)
                     lsuiv <- g.obtenir(i).suivants()
                     pour chaque arc dans lsuiv faire
                         pour i de 0 à g.taille -1 faire
-                            si g.obtenir(i) = arc.Noeud faire
+                            si g.obtenir(i) = arc.Graphe.Noeud faire
                                 pos<- i
                             fsi
                         fpour

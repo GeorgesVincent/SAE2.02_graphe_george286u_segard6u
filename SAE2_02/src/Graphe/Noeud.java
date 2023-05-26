@@ -1,3 +1,5 @@
+package Graphe;
+
 import java.util.*;
 
 public class Noeud {

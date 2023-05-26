@@ -1,3 +1,5 @@
+package Graphe;
+
 public class Arc {
     private String dest;
     private double cout;

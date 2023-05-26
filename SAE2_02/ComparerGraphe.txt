@@ -1,4 +1,4 @@
-Nom du Graphe    	Temps_BellmanFord	Temps_Dijkstra    	Moy d'Arcs/Noeud 	Ratio
+Nom du Graphe.Graphe    	Temps_BellmanFord	Temps_Dijkstra    	Moy d'Arcs/Graphe.Noeud 	Ratio
 Graphe1.txt      	1235500          	350599           	7,8              	113448,8462      
 Graphe101.txt    	7272799          	2941701          	53,7             	80653,5940       
 Graphe102.txt    	3243500          	2386500          	52,1             	16455,4531       
