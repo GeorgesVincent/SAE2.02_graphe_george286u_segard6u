@@ -1,3 +1,5 @@
+package Graphe;
+
 public class BellmanFord {//v5 de l'algo enfin fonctionnelle
 
     /**

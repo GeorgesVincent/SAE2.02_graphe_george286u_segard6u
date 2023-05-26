@@ -1,8 +1,12 @@
 package laby;
 
+import Graphe.GrapheLabyrinthe;
+import Graphe.GrapheListe;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -127,9 +131,9 @@ public class Labyrinthe {
      *
      * @param action une des actions possibles
      */
-    public int[] deplacerPerso(int i, int j,String action) {
+    public int[] deplacerPerso(int i, int j, String action) {
         // case courante
-        int[] courante = {i,j};
+        int[] courante = {i, j};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
@@ -140,6 +144,48 @@ public class Labyrinthe {
             return suivante;
         }
         return courante;
+    }
+
+    public GrapheListe genererGraphe() {
+        return new GrapheLabyrinthe();
+        GrapheListe g = new GrapheListe();
+        ArrayList<String> actions = new ArrayList<>();
+        for (int y = 0; y < this.getLengthY(); y++) {
+            for (int x = 0; x < this.getLength(); x++) {
+                if (!this.murs[x][y]) {
+                    ArrayList<int[]> chemins = new ArrayList<>();
+                    StringBuilder s1 = null;
+                    if (x > 0) {
+                        actions.add(GAUCHE);
+                    }
+                    if (x < getLength() - 1) {
+                        actions.add(DROITE);
+                    }
+                    if (y > 0) {
+                        actions.add(HAUT);
+                    }
+                    if (y < getLengthY() - 1) {
+                        actions.add(BAS);
+                    }
+                    for (String s : actions) {
+                        chemins.add(getSuivant(x,y,s));
+                    }
+                    if(chemins.size()>0){
+                        s1 = new StringBuilder();
+                        s1.append(x).append(",").append(y);
+                    }
+                    for (int[] i : chemins){
+                        if(!murs[i[0]][i[1]]) {
+                            StringBuilder s2 = new StringBuilder();
+                            s2.append(i[0]).append(",").append(i[1]);
+                            g.ajouterArc(s1.toString(), s2.toString(), 1);
+                            g.ajouterArc(s2.toString(), s1.toString(), 1);
+                        }
+                    }
+                }
+            }
+        }
+        return g;
     }
 
 
@@ -176,6 +222,7 @@ public class Labyrinthe {
 
     /**
      * return mur en (i,j)
+     *
      * @param x
      * @param y
      * @return

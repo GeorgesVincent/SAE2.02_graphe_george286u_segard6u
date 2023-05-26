@@ -1,3 +1,7 @@
+import Graphe.BellmanFord;
+import Graphe.Dijkstra;
+import Graphe.GrapheListe;
+
 import java.io.*;
 import java.util.regex.*;
 
@@ -6,9 +10,8 @@ public class ComparerGraphe {
         File dir = new File("Graphes");
         Pattern p = Pattern.compile("Graphe\\d");
         File[] graphes = dir.listFiles(pathname -> p.matcher(pathname.toString()).find());
-        String res;
         PrintWriter pw = new PrintWriter(new FileWriter("ComparerGraphe.txt"));
-        pw.write("Nom du Graphe    \tTemps_BellmanFord\tTemps_Dijkstra    \tMoy d'Arcs/Noeud \tRatio\n");
+        pw.write("Nom du Graphe.Graphe    \tTemps_BellmanFord\tTemps_Dijkstra    \tMoy d'Arcs/Graphe.Noeud \tRatio\n");
         double ratio_moy =0;
         long tempsB_moy = 0;
         long tempsD_moy=0;
