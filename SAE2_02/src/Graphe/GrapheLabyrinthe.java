@@ -6,16 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrapheLabyrinthe implements Graphe{
+
+    private GrapheListe g;
+
     @Override
     public List<String> listeNoeuds() {
-        return null;
+        return g.listeNoeuds();
+    }
+    @Override
+    public List<Noeud> getEnsNoeuds(){
+        return g.getEnsNoeuds();
     }
 
     @Override
     public List<Arc> suivants(String n) {
-        return null;
+        return g.suivants(n);
     }
     public GrapheLabyrinthe(Labyrinthe l){
+        GrapheListe g = new GrapheListe();
         ArrayList<String> actions = new ArrayList<>();
         for (int y = 0; y < l.getLengthY(); y++) {
             for (int x = 0; x < l.getLength(); x++) {
@@ -25,24 +33,24 @@ public class GrapheLabyrinthe implements Graphe{
                     if (x > 0) {
                         actions.add(Labyrinthe.GAUCHE);
                     }
-                    if (x < getLength() - 1) {
-                        actions.add(Labyrinthe.GAUCHE);
+                    if (x < l.getLength() - 1) {
+                        actions.add(Labyrinthe.DROITE);
                     }
                     if (y > 0) {
-                        actions.add(HAUT);
+                        actions.add(Labyrinthe.HAUT);
                     }
-                    if (y < getLengthY() - 1) {
-                        actions.add(BAS);
+                    if (y < l.getLengthY() - 1) {
+                        actions.add(Labyrinthe.BAS);
                     }
                     for (String s : actions) {
-                        chemins.add(getSuivant(x,y,s));
+                        chemins.add(Labyrinthe.getSuivant(x,y,s));
                     }
                     if(chemins.size()>0){
                         s1 = new StringBuilder();
                         s1.append(x).append(",").append(y);
                     }
                     for (int[] i : chemins){
-                        if(!murs[i[0]][i[1]]) {
+                        if(!l.murs[i[0]][i[1]]) {
                             StringBuilder s2 = new StringBuilder();
                             s2.append(i[0]).append(",").append(i[1]);
                             g.ajouterArc(s1.toString(), s2.toString(), 1);
@@ -52,5 +60,6 @@ public class GrapheLabyrinthe implements Graphe{
                 }
             }
         }
+        this.g=g;
     }
 }

@@ -38,7 +38,7 @@ public class Dijkstra {
     public Valeur resoudre(Graphe g, String depart) {
         ArrayList<Noeud> q = new ArrayList<>();
         Valeur v = new Valeur();
-        for (Noeud n : ((GrapheListe) g).getEnsNoeuds()) {
+        for (Noeud n : g.getEnsNoeuds()) {
             v.setParent(n.getNom(), null);
             q.add(n);
             if (n.getNom().equals(depart)) {

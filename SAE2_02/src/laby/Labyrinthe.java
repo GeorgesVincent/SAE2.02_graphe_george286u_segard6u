@@ -1,5 +1,6 @@
 package laby;
 
+import Graphe.Graphe;
 import Graphe.GrapheLabyrinthe;
 import Graphe.GrapheListe;
 
@@ -44,7 +45,7 @@ public class Labyrinthe {
      * @param action action effectuee
      * @return case suivante
      */
-    static int[] getSuivant(int x, int y, String action) {
+    public static int[] getSuivant(int x, int y, String action) {
         switch (action) {
             case HAUT:
                 // on monte une ligne
@@ -146,46 +147,8 @@ public class Labyrinthe {
         return courante;
     }
 
-    public GrapheListe genererGraphe() {
-        return new GrapheLabyrinthe();
-        GrapheListe g = new GrapheListe();
-        ArrayList<String> actions = new ArrayList<>();
-        for (int y = 0; y < this.getLengthY(); y++) {
-            for (int x = 0; x < this.getLength(); x++) {
-                if (!this.murs[x][y]) {
-                    ArrayList<int[]> chemins = new ArrayList<>();
-                    StringBuilder s1 = null;
-                    if (x > 0) {
-                        actions.add(GAUCHE);
-                    }
-                    if (x < getLength() - 1) {
-                        actions.add(DROITE);
-                    }
-                    if (y > 0) {
-                        actions.add(HAUT);
-                    }
-                    if (y < getLengthY() - 1) {
-                        actions.add(BAS);
-                    }
-                    for (String s : actions) {
-                        chemins.add(getSuivant(x,y,s));
-                    }
-                    if(chemins.size()>0){
-                        s1 = new StringBuilder();
-                        s1.append(x).append(",").append(y);
-                    }
-                    for (int[] i : chemins){
-                        if(!murs[i[0]][i[1]]) {
-                            StringBuilder s2 = new StringBuilder();
-                            s2.append(i[0]).append(",").append(i[1]);
-                            g.ajouterArc(s1.toString(), s2.toString(), 1);
-                            g.ajouterArc(s2.toString(), s1.toString(), 1);
-                        }
-                    }
-                }
-            }
-        }
-        return g;
+    public Graphe genererGraphe() {
+        return new GrapheLabyrinthe(this);
     }
 
 
