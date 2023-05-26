@@ -8,6 +8,11 @@ public class Noeud {
         adj= new ArrayList<>();
     }
 
+    /**
+     * methode pour comparer des noeud
+     * @param o noeud acvec lequel on veut comparer
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o){
         if(o instanceof Noeud){
@@ -18,6 +23,11 @@ public class Noeud {
         }
     }
 
+    /**
+     * methode qui ajoute un arc a un noeud
+     * @param destination noeud de destination
+     * @param cout cout de l'arc
+     */
     public void ajouterArc(String destination, double cout){
         adj.add(new Arc(new Noeud(destination),cout));
     }

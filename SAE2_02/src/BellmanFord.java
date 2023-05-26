@@ -1,4 +1,11 @@
 public class BellmanFord {//v5 de l'algo enfin fonctionnelle
+
+    /**
+     * Méthode qui résoud un graphe avec un point de depart donne
+     * @param g Graphe que l'on veut resoudre
+     * @param depart Nom du noeud de depart
+     * @return objet Valeur
+     */
     public Valeur resoudre(Graphe g, String depart) {
         Valeur v = new Valeur();
         boolean fin = false;

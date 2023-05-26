@@ -85,6 +85,11 @@ public class Valeur {
 
     }
 
+    /**
+     * methode qui calcul le chemin minimum
+     * @param destination noeud de destination
+     * @return liste de string qui represente le nom des noeud
+     */
     public List<String> calculerChemin(String destination) {
         String s = destination;
         List<String> ch = new ArrayList<>();

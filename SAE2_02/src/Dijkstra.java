@@ -26,6 +26,13 @@ public class Dijkstra {
 //      Fin Pour
 //    Fin Tant que
 //    Fin
+
+    /**
+     * Méthode qui résoud un graphe avec un point de depart donne
+     * @param g Graphe que l'on veut resoudre
+     * @param depart Nom du noeud de depart
+     * @return objet Valeur
+     */
     public Valeur resoudre(Graphe g, String depart) {
         ArrayList<Noeud> q = new ArrayList<>();
         Valeur v = new Valeur();
